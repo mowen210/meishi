@@ -1,0 +1,112 @@
+<view class="container">
+
+  <view class="card pad">
+    <view class="fld">
+      <view class="lab">餐馆名称 <text class="req">*</text></view>
+      <input class="ipt" value="{{form.name}}" placeholder="例如：老街牛肉粉"
+             data-field="name" bindinput="onField" maxlength="60" />
+    </view>
+
+    <view class="fld">
+      <view class="lab">分类</view>
+      <input class="ipt" value="{{form.category}}" placeholder="可自己填，如 粉面 / 烧烤"
+             data-field="category" bindinput="onField" maxlength="20" />
+      <view class="cats">
+        <view wx:for="{{cats}}" wx:key="*this" class="cat {{form.category === item ? 'on' : ''}}"
+              data-cat="{{item}}" bindtap="pickCat">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="fld">
+      <view class="lab">电话</view>
+      <input class="ipt" type="text" value="{{form.phone}}" placeholder="0851-xxxxxxxx"
+             data-field="phone" bindinput="onField" maxlength="40" />
+    </view>
+
+    <view class="fld">
+      <view class="lab">地址</view>
+      <input class="ipt" value="{{form.address}}" placeholder="XX市XX区XX路XX号"
+             data-field="address" bindinput="onField" maxlength="200" />
+      <view class="locrow">
+        <view class="btn ghost" bindtap="pickLocation">📍 地图选点</view>
+        <view class="btn ghost" wx:if="{{form.lat}}" bindtap="clearLocation">清除坐标</view>
+      </view>
+      <view class="hint" wx:if="{{locName}}">已选位置：{{locName}}</view>
+      <view class="hint" wx:else="{{true}}">不选点也能用：填了文字地址，别人可以复制到地图搜索。</view>
+    </view>
+
+    <view class="fld">
+      <view class="lab">营业时间</view>
+      <input class="ipt" value="{{form.hours}}" placeholder="例如 06:30-14:00"
+             data-field="hours" bindinput="onField" maxlength="60" />
+    </view>
+  </view>
+
+  <!-- 评分 / 推荐指数 -->
+  <view class="card pad">
+    <view class="sech">评分与推荐</view>
+
+    <view class="fld row">
+      <view class="lab">评分</view>
+      <picker mode="selector" range="{{ratingRange}}" value="{{ratingIndex}}" bindchange="onRating">
+        <view class="pickcell">{{form.rating ? form.rating + ' 分' : '未评分'}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="fld">
+      <view class="lab">推荐指数 <text class="tips">（点星星，1～5 星）</text></view>
+      <view class="starpick">
+        <text wx:for="{{stars}}" wx:key="*this"
+              class="sp {{form.recommend >= item ? 'on' : ''}}"
+              data-n="{{item}}" bindtap="setRecommend">{{form.recommend >= item ? '★' : '☆'}}</text>
+        <text class="spval">{{form.recommend || 0}}/5</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 招牌菜 -->
+  <view class="card pad">
+    <view class="sech">招牌菜</view>
+    <view class="drow" wx:for="{{dishes}}" wx:key="k">
+      <input class="din" value="{{item.name}}" placeholder="菜名，如 清汤牛肉粉"
+             data-i="{{index}}" bindinput="onDishName" maxlength="40" />
+      <input class="dpri" value="{{item.price}}" placeholder="价格" type="digit"
+             data-i="{{index}}" bindinput="onDishPrice" maxlength="20" />
+      <view class="dx" data-i="{{index}}" bindtap="delDish">✕</view>
+    </view>
+    <view class="addrow" bindtap="addDish">＋ 添加招牌菜</view>
+  </view>
+
+  <!-- 图片 -->
+  <view class="card pad">
+    <view class="sech">图片 <text class="tips">（原图，不压缩、不限张数）</text></view>
+    <view class="picks">
+      <view class="pick" wx:for="{{images}}" wx:key="k">
+        <image class="pimg" src="{{item.previewUrl || item.local}}" mode="aspectFill"
+               data-src="{{item.previewUrl}}" bindtap="previewImg" />
+        <view class="pdel" data-i="{{index}}" catchtap="delImage">✕</view>
+        <view wx:if="{{item.status === 'uploading'}}" class="pstat">上传中…</view>
+        <view wx:elif="{{item.status === 'fail'}}" class="pstat fail" data-i="{{index}}" catchtap="retryUpload">失败，点重试</view>
+      </view>
+      <view class="pick add" bindtap="addImages">
+        <text class="plus">＋</text>
+        <text class="ptext">添加图片</text>
+      </view>
+    </view>
+    <view class="hint">一次最多选 9 张，可以反复添加；选的是相册里的原图，服务器原样保存。</view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card pad">
+    <view class="sech">备注</view>
+    <textarea class="ta" value="{{form.note}}" placeholder="人均、停车、排队情况、必点菜…"
+              data-field="note" bindinput="onField" maxlength="1000" />
+  </view>
+
+  <view class="savebar">
+    <view class="btn primary big" bindtap="save">{{saving ? '保存中…' : '保存'}}</view>
+    <view class="btn danger big" wx:if="{{!isNew}}" bindtap="removeShop">删除</view>
+  </view>
+
+  <view class="hint" wx:if="{{!isNew}}" style="text-align:center;">删除会同时清理服务器上的图片，不可恢复。</view>
+</view>

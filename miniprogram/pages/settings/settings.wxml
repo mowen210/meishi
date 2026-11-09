@@ -1,0 +1,38 @@
+<view class="container">
+  <view class="card pad">
+    <view class="sech">服务器</view>
+
+    <view class="fld">
+      <view class="lab">服务器地址</view>
+      <input class="ipt" value="{{baseUrl}}" placeholder="https://你的域名 或 http://1.2.3.4:3000"
+             bindinput="onBase" />
+      <view class="hint">不带结尾斜杠。上线必须用 https 域名，并在小程序后台加入白名单。</view>
+    </view>
+
+    <view class="fld">
+      <view class="lab">管理口令</view>
+      <input class="ipt" value="{{token}}" password="{{true}}" placeholder="后端 ADMIN_TOKEN"
+             bindinput="onToken" />
+      <view class="hint">只影响「新增 / 修改 / 删除 / 上传图片」，别人打开只能看，改不了。</view>
+    </view>
+
+    <view class="row2">
+      <view class="btn primary" bindtap="save">保存</view>
+      <view class="btn" bindtap="test">{{testing ? '测试中…' : '测试连接'}}</view>
+    </view>
+
+    <view class="result" wx:if="{{result}}">{{result}}</view>
+  </view>
+
+  <view class="card pad">
+    <view class="sech">部署提示（给朋友看）</view>
+    <view class="steps">
+      <view class="step">1. 服务器装 Node（14 以上），把 server 文件夹传上去。</view>
+      <view class="step">2. 在该目录执行：<text class="code">ADMIN_TOKEN=你的口令 PORT=3000 node server.js</text></view>
+      <view class="step">3. 用 Nginx 把域名反代到这个端口，配好 https 证书。</view>
+      <view class="step">4. 微信公众平台 → 开发管理 → 服务器域名，把域名加进 request 和 uploadFile 白名单。</view>
+      <view class="step">5. 回到这里填域名和口令，点「测试连接」。</view>
+    </view>
+    <view class="hint">图片存在服务器的 uploads 目录，原图原样保存，不做压缩。</view>
+  </view>
+</view>

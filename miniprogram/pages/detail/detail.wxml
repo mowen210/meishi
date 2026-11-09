@@ -1,0 +1,75 @@
+<view wx:if="{{loading}}" class="loading">正在加载…</view>
+
+<view wx:elif="{{err}}" class="container">
+  <view class="errbox">
+    <view class="et">{{err}}</view>
+    <view class="btn" bindtap="load">重试</view>
+  </view>
+</view>
+
+<view wx:elif="{{shop}}" class="page">
+  <!-- 图片：原图轮播，点击看大图 -->
+  <swiper wx:if="{{images.length}}" class="gallery" indicator-dots="{{images.length > 1}}"
+          indicator-color="rgba(255,255,255,.4)" indicator-active-color="#ffffff" circular="{{true}}">
+    <swiper-item wx:for="{{images}}" wx:key="*this">
+      <image class="gimg" src="{{item}}" mode="aspectFill" data-src="{{item}}" bindtap="preview" />
+    </swiper-item>
+  </swiper>
+  <view wx:else="{{true}}" class="gallery none">暂无图片</view>
+
+  <view class="container" style="margin-top:-40rpx;">
+    <view class="card head">
+      <view class="line1">
+        <text class="name">{{shop.name}}</text>
+        <text class="score" wx:if="{{shop.rating}}">{{shop.rating}}<text class="unit">分</text></text>
+      </view>
+
+      <view class="line2">
+        <text wx:if="{{shop.category}}" class="tag">{{shop.category}}</text>
+        <text wx:if="{{shop.hours}}" class="meta">🕘 {{shop.hours}}</text>
+        <text wx:if="{{images.length}}" class="meta">{{images.length}} 张图</text>
+      </view>
+
+      <view class="line3" wx:if="{{shop.recommend}}">
+        <text class="stars">{{starText}}</text>
+        <text class="rec">推荐指数 {{shop.recommend}}/5</text>
+      </view>
+
+      <!-- 招牌菜 -->
+      <view class="sec" wx:if="{{shop.dishes.length}}">
+        <view class="sech">招牌菜</view>
+        <view class="dishrow" wx:for="{{shop.dishes}}" wx:key="name">
+          <text class="dn">{{index + 1}}. {{item.name}}</text>
+          <text class="dp" wx:if="{{item.price}}">¥{{item.price}}</text>
+        </view>
+      </view>
+
+      <!-- 联系与位置 -->
+      <view class="sec">
+        <view class="sech">联系与位置</view>
+        <view class="kv" wx:if="{{shop.phone}}">
+          <text class="k">电话</text>
+          <text class="v red" bindtap="callPhone">{{shop.phone}}</text>
+        </view>
+        <view class="kv" wx:if="{{shop.address}}">
+          <text class="k">地址</text>
+          <text class="v" bindtap="copyAddress">{{shop.address}}</text>
+        </view>
+        <view class="kv" wx:if="{{shop.hours}}">
+          <text class="k">营业</text>
+          <text class="v">{{shop.hours}}</text>
+        </view>
+      </view>
+
+      <view class="note" wx:if="{{shop.note}}">{{shop.note}}</view>
+
+      <view class="acts">
+        <view class="btn primary" bindtap="callPhone">📞 拨打电话</view>
+        <view class="btn" bindtap="nav">🧭 地图导航</view>
+        <view class="btn ghost" bindtap="goEdit">编辑</view>
+      </view>
+    </view>
+
+    <view class="hint">点右上角「···」→ 转发，朋友点开就能看到这家店的图片、招牌菜和地址。</view>
+  </view>
+</view>

@@ -1,0 +1,67 @@
+<view class="topbar">
+  <view class="search">
+    <text class="ico">🔍</text>
+    <input class="ipt" value="{{q}}" placeholder="搜店名、地址、招牌菜" confirm-type="search"
+           bindinput="onInput" bindconfirm="onConfirm" />
+  </view>
+  <view class="gear" bindtap="goSettings">⚙</view>
+</view>
+
+<scroll-view class="chips" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+  <view wx:for="{{categories}}" wx:key="*this"
+        class="chip {{cat === item ? 'on' : ''}}"
+        data-cat="{{item}}" bindtap="pickCat">{{item}}</view>
+</scroll-view>
+
+<view class="container">
+  <view wx:if="{{err}}" class="errbox">
+    <view class="et">{{err}}</view>
+    <view class="btn primary small" bindtap="goSettings">去设置服务器地址</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">正在加载…</view>
+
+  <view wx:elif="{{showEmpty}}" class="empty">
+    <view class="big">🍜</view>
+    <view class="t">还没有收录餐馆</view>
+    <view class="d">点右下角 ＋ 添加第一家：店名、招牌菜、评分、图片</view>
+  </view>
+
+  <view wx:for="{{shops}}" wx:key="id" class="card" data-id="{{item.id}}" bindtap="goDetail">
+    <image wx:if="{{item.coverUrl}}" class="cover" src="{{item.coverUrl}}" mode="aspectFill" lazy-load="{{true}}" />
+    <view wx:else="{{true}}" class="cover none">暂无图片</view>
+
+    <view class="body">
+      <view class="line1">
+        <text class="name">{{item.name}}</text>
+        <text class="score" wx:if="{{item.rating}}">{{item.rating}}<text class="unit">分</text></text>
+      </view>
+
+      <view class="line2">
+        <text wx:if="{{item.category}}" class="tag">{{item.category}}</text>
+        <text wx:if="{{item.hours}}" class="meta">{{item.hours}}</text>
+        <text wx:if="{{item.imageCount}}" class="meta">{{item.imageCount}} 图</text>
+      </view>
+
+      <view class="line3" wx:if="{{item.recommend}}">
+        <text class="stars">{{item.starText}}</text>
+        <text class="rec">推荐指数 {{item.recommend}}/5</text>
+      </view>
+
+      <view class="dishes" wx:if="{{item.dishText}}">
+        <text class="dlab">招牌</text>
+        <text class="dtext">{{item.dishText}}</text>
+      </view>
+
+      <view class="addr" wx:if="{{item.address}}">📍 {{item.address}}</view>
+
+      <view class="acts">
+        <view class="btn primary" catchtap="callPhone" data-phone="{{item.phone}}">拨打电话</view>
+        <view class="btn" catchtap="nav" data-index="{{index}}">导航</view>
+        <view class="btn ghost" catchtap="goEdit" data-id="{{item.id}}">编辑</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="fab" bindtap="goAdd">＋</view>

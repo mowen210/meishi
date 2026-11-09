@@ -1,0 +1,42 @@
+/* 全局样式：深红 + 米色，与学院汇报 PPT 同色系 */
+page {
+  background: #F6F2EC;
+  color: #1F1F1F;
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.container { padding: 24rpx 24rpx 60rpx; }
+.muted { color: #8C8C8C; }
+.red { color: #7A1024; }
+.card {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 6rpx 20rpx rgba(31,31,31,.07);
+  margin-bottom: 24rpx;
+}
+.btn {
+  display: flex; align-items: center; justify-content: center;
+  height: 76rpx; padding: 0 26rpx; border-radius: 14rpx;
+  background: #fff; color: #4A4A4A; border: 1rpx solid #E6DDD2;
+  font-size: 26rpx;
+}
+.btn.primary { background: #7A1024; color: #fff; border-color: #7A1024; }
+.btn.ghost { background: #FCFAF7; }
+.btn:active { opacity: .75; }
+.stars { color: #C9A227; letter-spacing: 2rpx; }
+.empty {
+  background: #fff; border: 1rpx dashed #E6DDD2; border-radius: 20rpx;
+  padding: 90rpx 40rpx; text-align: center; color: #4A4A4A;
+}
+.empty .big { font-size: 80rpx; }
+.empty .t { font-size: 32rpx; font-weight: 600; margin: 16rpx 0 8rpx; }
+.empty .d { font-size: 24rpx; color: #8C8C8C; }
+.fab {
+  position: fixed; right: 36rpx; bottom: 60rpx; width: 108rpx; height: 108rpx;
+  border-radius: 54rpx; background: #7A1024; color: #fff; font-size: 56rpx;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12rpx 30rpx rgba(122,16,36,.35); z-index: 10;
+}
+.fab:active { transform: scale(.94); }

@@ -1,0 +1,22 @@
+.card.pad { padding: 22rpx 24rpx; }
+.sech { font-size: 26rpx; color: #7A1024; font-weight: 600; margin-bottom: 18rpx; }
+.fld { margin-bottom: 24rpx; }
+.lab { font-size: 24rpx; color: #8C8C8C; margin-bottom: 10rpx; }
+.ipt {
+  width: 100%; height: 84rpx; background: #FCFAF7; border: 1rpx solid #E6DDD2;
+  border-radius: 14rpx; padding: 0 20rpx; font-size: 28rpx; box-sizing: border-box;
+}
+.hint { font-size: 21rpx; color: #9A9A9A; line-height: 1.65; margin-top: 10rpx; }
+.row2 { display: flex; gap: 16rpx; }
+.row2 .btn { flex: 1; height: 84rpx; }
+.result {
+  margin-top: 20rpx; background: #F4F8F4; border: 1rpx solid #CFE3CF;
+  border-radius: 14rpx; padding: 18rpx; font-size: 24rpx; color: #2E5B34; line-height: 1.7;
+  white-space: pre-wrap;
+}
+.steps { display: flex; flex-direction: column; gap: 14rpx; }
+.step { font-size: 25rpx; color: #4A4A4A; line-height: 1.7; }
+.code {
+  display: inline-block; background: #F1EBE2; border-radius: 8rpx; padding: 2rpx 10rpx;
+  font-size: 22rpx; color: #7A1024; word-break: break-all;
+}
